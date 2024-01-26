@@ -1,12 +1,17 @@
 <template>
-  <div class="container">
-    <h1 class="display-4 text-center">Views By Compain</h1>
-     <canvas ref="myChart"></canvas> 
+  <div class="container ms-5">
+    <h3 class="display-5">Views</h3>
+    <router-link to="/">
+       <i class="fa fa-home"></i> 
+      </router-link>
+      <canvas ref="myChart1" width="100" height="50"></canvas>
+<br>
+      <canvas ref="myChart2" width="100" height="50"></canvas>
+<br>
+      <canvas ref="myChart3" width="100" height="50"></canvas>
   </div>
 </template>
-<script>
-
-
+<script>  
 import Chart from 'chart.js/auto';
 import axios from 'axios';
 
@@ -36,7 +41,7 @@ export default {
     });
     
     const datasets = [];
-    const barColors = ['rgba(75,192,192,0.2)', 'rgba(255,99,132,0.2)', 'rgba(255,205,86,0.2)']; 
+    const barColors = ['rgba(75,192,192,0.4)', 'rgba(255,99,132,0.4)', 'rgba(255,205,86,0.4)']; 
 
     for (let i = 0; i < values[0].length; i++) {
         const dataValues = values.map((item) => item[i]);
@@ -58,27 +63,104 @@ export default {
 },
 mounted() {
     GetData();
-    this.renderChart();
+    this.renderChart1();
+    this.renderChart2();
+    this.renderChart3();
 },
-
-  methods: {
-
-      
-    renderChart() {
-      const ctx = this.$refs.myChart.getContext('2d');
+  methods: {   
+    renderChart1() {
+      const ctx = this.$refs.myChart1.getContext('2d');
       new Chart(ctx, {
         type: 'bar',
         data: this.chartData,
         options: {
-          
-        },
+    plugins: {
+      title: {
+        display: true,
+        text: 'Views by Campain',
+        fontSize: 26,
+        position :"top"
+   
+      },
+    },
+    responsive: true,
+}
         
       });
     },
+
+
+
+    renderChart2() {
+      const ctx = this.$refs.myChart2.getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: this.chartData,
+        options: {
+    plugins: {
+      title: {
+        display: true,
+        text: 'Views by Campain by gender',
+        fontSize: 26,
+        position :"top"
+   
+      },
+    },
+    responsive: true,
+}
+      });
+    },
+    renderChart3() {
+      const ctx = this.$refs.myChart3.getContext('2d');
+      console.log(this.chartData)
+      new Chart(ctx, {
+        type: 'bar',
+        data: this.chartData,
+        options: {
+    plugins: {
+      title: {
+        display: true,
+        text: 'Views by Campain by Gender by Ages',
+        fontSize: 26,
+        position :"top"
+   
+      },
+    },
+    responsive: true,
+}
+
+
+
+      });
+    },
+
+    
   },
 };
 </script>
+
 <style scoped>
+.fa-home{
+  position: absolute;
+  left: 95%;
+  top:10px;
+  background-color: rgb(29, 225, 255);
+  padding: 1%;
+  font-size: x-large;
+  border-radius: 15px;
+  box-shadow: 3px 3px 12px black;
 
+}
+.container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.myChart {
+  max-width: 600px;
+  max-height: 300px;
+  
+  margin: 15px;
+  display: block;
+}
 </style>
-
